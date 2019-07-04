@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors()); 
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -66,12 +66,12 @@ augur.augur.markets.getMarketsInfo({
 }, function (error, result) {  res.status(404).send(JSON.stringify(result, null, 2));
 })
 
-  
+
 }));
 
 /*
 app.get('/markets', (req, res) => augur.augur.trading.getUserTradingHistory({
-  
+
   marketId: "0x98c189f9254b5729eb870688f812b83ebd116798",
   outcome: 0,
   sortBy: "price",
@@ -125,5 +125,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+};
+
+app.use(allowCrossDomain);
 
 module.exports = app;
